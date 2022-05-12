@@ -136,7 +136,7 @@ function SignUp() {
               Confirme a senha
             </InputLabel>
             <OutlinedInput
-              id="outlined-adornment-password"
+              id="outlined-adornment-passwordConfirmation"
               type={showPassword ? "text" : "password"}
               value={formData.passwordConfirmation}
               name="passwordConfirmation"
