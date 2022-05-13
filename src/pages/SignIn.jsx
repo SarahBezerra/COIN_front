@@ -13,7 +13,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import useAuth from "../hooks/useAuth";
-import api from "../services/api.tsx";
+import api from "../services/api";
 import Form from "../components/Form";
 import logo from "../assets/coin.png";
 

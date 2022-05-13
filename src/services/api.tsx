@@ -28,7 +28,7 @@ interface SignInData {
 }
 
 async function signIn(signInData: SignInData) {
-  await baseAPI.post("/sign-in", signInData);
+  return baseAPI.post<{ token: string }>("/sign-in", signInData);
 }
 
 const api = {
