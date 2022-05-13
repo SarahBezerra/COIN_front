@@ -12,18 +12,28 @@ function getConfig(token: string) {
   };
 }
 
-interface UserData {
+interface SignUpData {
   email: string;
   username: string;
   password: string;
 }
 
-async function signUp(signUpData: UserData) {
+async function signUp(signUpData: SignUpData) {
   await baseAPI.post("/sign-up", signUpData);
+}
+
+interface SignInData {
+  email: string;
+  password: string;
+}
+
+async function signIn(signInData: SignInData) {
+  await baseAPI.post("/sign-in", signInData);
 }
 
 const api = {
   signUp,
+  signIn,
 };
 
 export default api;

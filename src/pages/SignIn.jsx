@@ -12,6 +12,7 @@ import {
 } from "@mui/material/";
 import { Link, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import useAuth from "../hooks/useAuth";
 import api from "../services/api.tsx";
 import Form from "../components/Form";
 import logo from "../assets/coin.png";
@@ -30,13 +31,12 @@ const styles = {
   logo: { width: "60px" },
 };
 
-function SignUp() {
+function SignIn() {
+  const { signIn } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
-    username: "",
     password: "",
-    passwordConfirmation: "",
   });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -55,26 +55,19 @@ function SignUp() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (
-      !formData?.email ||
-      !formData?.username ||
-      !formData?.password ||
-      !formData?.passwordConfirmation
-    ) {
+    if (!formData?.email || !formData?.password) {
       alert("Erro: Todos os campos são obrigatórios!");
       return;
     }
 
-    const { email, username, password, passwordConfirmation } = formData;
-
-    if (password !== passwordConfirmation) {
-      alert("Erro: As senhas devem ser iguais!");
-      return;
-    }
+    const { email, password } = formData;
 
     try {
-      await api.signUp({ email, username, password });
-      navigate("/");
+      const {
+        data: { token },
+      } = await api.signIn({ email, password });
+      signIn(token);
+      navigate("/home");
     } catch (error) {
       if (error.response) {
         alert(`Erro: ${error.response.data}`);
@@ -90,7 +83,7 @@ function SignUp() {
         <img src={logo} alt="logo Coin" style={styles.logo} />
         <Box sx={styles.container}>
           <Typography sx={styles.title} variant="h4" component="h1">
-            CADASTRO
+            LOGIN
           </Typography>
 
           <TextField
@@ -101,15 +94,6 @@ function SignUp() {
             variant="outlined"
             onChange={handleInputChange}
             value={formData.email}
-          />
-          <TextField
-            name="username"
-            sx={styles.input}
-            label="Username"
-            type="username"
-            variant="outlined"
-            onChange={handleInputChange}
-            value={formData.username}
           />
           <FormControl variant="outlined" sx={styles.input}>
             <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
@@ -134,38 +118,13 @@ function SignUp() {
               label="Senha"
             />
           </FormControl>
-          <FormControl variant="outlined" sx={styles.input}>
-            <InputLabel htmlFor="outlined-adornment-password">
-              Confirme a senha
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-passwordConfirmation"
-              type={showPassword ? "text" : "password"}
-              value={formData.passwordConfirmation}
-              name="passwordConfirmation"
-              onChange={handleInputChange}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleIconClick}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Confirme a senha"
-            />
-          </FormControl>
           <Box sx={styles.actionsContainer}>
             <Button variant="contained" type="submit" sx={styles.button}>
-              Cadastrar
+              Entrar
             </Button>
-            <Link to="/">
+            <Link to="/sign-up">
               <Typography sx={styles.link}>
-                Já possuo cadastro! Fazer Login
+                Não possui cadastro? Clique aqui
               </Typography>
             </Link>
           </Box>
@@ -175,4 +134,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default SignIn;
