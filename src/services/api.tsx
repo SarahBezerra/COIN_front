@@ -31,9 +31,20 @@ async function signIn(signInData: SignInData) {
   return baseAPI.post<{ token: string }>("/sign-in", signInData);
 }
 
+export interface Category {
+  id: number;
+  name: string;
+}
+
+async function getCategories(token: string) {
+  const accessToken = getConfig(token)
+  return baseAPI.get<Category[]>("/categories", accessToken);
+}
+
 const api = {
   signUp,
   signIn,
+  getCategories,
 };
 
 export default api;

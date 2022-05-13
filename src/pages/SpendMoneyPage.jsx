@@ -1,9 +1,10 @@
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
+  FormControl,
   Box,
   Button,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -11,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "../components/Form";
 import useAuth from "../hooks/useAuth";
+import api from "../services/api";
 
 const styles = {
   title: { padding: "20px 0 20px 0", color: "#110F16" },
@@ -54,6 +56,7 @@ const styles = {
 function SpendMoney() {
   const navigate = useNavigate();
   const { token } = useAuth();
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -61,6 +64,16 @@ function SpendMoney() {
     date: "",
     category: "",
   });
+
+  useEffect(() => {
+    async function loadPage() {
+      if (!token) return;
+
+      const { data: categoriesData } = await api.getCategories(token);
+      setCategories(categoriesData);
+    }
+    loadPage();
+  }, [token]);
 
   function handleInputChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -102,8 +115,8 @@ function SpendMoney() {
         <TextField
           name="price"
           sx={styles.input}
-          label="Valor"
-          type="price"
+          label="Valor *"
+          type="number"
           variant="outlined"
           onChange={handleInputChange}
           value={formData.price}
@@ -116,15 +129,32 @@ function SpendMoney() {
           onChange={handleInputChange}
           value={formData.date}
         />
-        <TextField
-          name="category"
-          sx={styles.input}
-          label="Categoria"
-          type="category"
-          variant="outlined"
-          onChange={handleInputChange}
-          value={formData.category}
-        />
+
+        <FormControl required fullWidth>
+          <InputLabel id="category">Categoria</InputLabel>
+          <Select
+            labelId="category"
+            id="category"
+            value={formData.category}
+            label="Categoria"
+            name="category"
+            onChange={handleInputChange}
+          >
+            {categories.length === 0 ? (
+              <MenuItem value="">
+                <em>Não há categorias criadas</em>
+              </MenuItem>
+            ) : (
+              categories.map((category) => {
+                return (
+                  <MenuItem key={category.id} value={category.name}>
+                    {category.name}
+                  </MenuItem>
+                );
+              })
+            )}
+          </Select>
+        </FormControl>
         <Button variant="contained" type="submit" sx={styles.button}>
           CADASTRAR
         </Button>
