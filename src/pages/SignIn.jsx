@@ -78,59 +78,57 @@ function SignIn() {
   }
 
   return (
-    <>
-      <Form onSubmit={handleSubmit} style={styles.form}>
-        <img src={logo} alt="logo Coin" style={styles.logo} />
-        <Box sx={styles.container}>
-          <Typography sx={styles.title} variant="h4" component="h1">
-            LOGIN
-          </Typography>
+    <Form onSubmit={handleSubmit} style={styles.form}>
+      <img src={logo} alt="logo Coin" style={styles.logo} />
+      <Box>
+        <Typography sx={styles.title} variant="h4" component="h1">
+          LOGIN
+        </Typography>
 
-          <TextField
-            name="email"
-            sx={styles.input}
-            label="Email"
-            type="email"
-            variant="outlined"
+        <TextField
+          name="email"
+          sx={styles.input}
+          label="Email"
+          type="email"
+          variant="outlined"
+          onChange={handleInputChange}
+          value={formData.email}
+        />
+        <FormControl variant="outlined" sx={styles.input}>
+          <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            name="password"
             onChange={handleInputChange}
-            value={formData.email}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleIconClick}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Senha"
           />
-          <FormControl variant="outlined" sx={styles.input}>
-            <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword ? "text" : "password"}
-              value={formData.password}
-              name="password"
-              onChange={handleInputChange}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleIconClick}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Senha"
-            />
-          </FormControl>
-          <Box sx={styles.actionsContainer}>
-            <Button variant="contained" type="submit" sx={styles.button}>
-              Entrar
-            </Button>
-            <Link to="/sign-up">
-              <Typography sx={styles.link}>
-                Não possui cadastro? Clique aqui
-              </Typography>
-            </Link>
-          </Box>
+        </FormControl>
+        <Box sx={styles.actionsContainer}>
+          <Button variant="contained" type="submit" sx={styles.button}>
+            Entrar
+          </Button>
+          <Link to="/sign-up">
+            <Typography sx={styles.link}>
+              Não possui cadastro? Clique aqui
+            </Typography>
+          </Link>
         </Box>
-      </Form>
-    </>
+      </Box>
+    </Form>
   );
 }
 

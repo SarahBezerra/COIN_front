@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import SpendMoney from "./pages/SpendMoneyPage";
 
 function App() {
   const theme = createTheme({
@@ -26,6 +27,7 @@ function App() {
             <Routes>
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/" element={<SignIn />} />
+              <Route path="/register/spend-money" element={<SpendMoney />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

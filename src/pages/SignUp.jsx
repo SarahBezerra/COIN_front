@@ -88,7 +88,7 @@ function SignUp() {
     <>
       <Form onSubmit={handleSubmit} style={styles.form}>
         <img src={logo} alt="logo Coin" style={styles.logo} />
-        <Box sx={styles.container}>
+        <Box>
           <Typography sx={styles.title} variant="h4" component="h1">
             CADASTRO
           </Typography>
