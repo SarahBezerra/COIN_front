@@ -1,12 +1,4 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "../components/Form";
@@ -51,7 +43,7 @@ const styles = {
   },
 };
 
-function SpendMoney() {
+function DepositMoney() {
   const navigate = useNavigate();
   const { token } = useAuth();
   const [formData, setFormData] = useState({
@@ -59,7 +51,6 @@ function SpendMoney() {
     description: "",
     price: "",
     date: "",
-    category: "",
   });
 
   function handleInputChange(e) {
@@ -72,13 +63,10 @@ function SpendMoney() {
         Cadastrar
       </Typography>
       <Box sx={styles.tabs}>
-        <Box
-          sx={styles.tab}
-          onClick={() => navigate("/register/deposit-money")}
-        >
-          ENTRADA
+        <Box sx={styles.selectTab}>ENTRADA</Box>
+        <Box sx={styles.tab} onClick={() => navigate("/register/spend-money")}>
+          SAÍDA
         </Box>
-        <Box sx={styles.selectTab}>SAÍDA</Box>
       </Box>
       <Box sx={styles.container}>
         <TextField
@@ -116,15 +104,6 @@ function SpendMoney() {
           onChange={handleInputChange}
           value={formData.date}
         />
-        <TextField
-          name="category"
-          sx={styles.input}
-          label="Categoria"
-          type="category"
-          variant="outlined"
-          onChange={handleInputChange}
-          value={formData.category}
-        />
         <Button variant="contained" type="submit" sx={styles.button}>
           CADASTRAR
         </Button>
@@ -133,4 +112,4 @@ function SpendMoney() {
   );
 }
 
-export default SpendMoney;
+export default DepositMoney;
