@@ -1,8 +1,9 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "../components/Form";
 import useAuth from "../hooks/useAuth";
+import api from "../services/api";
 
 const styles = {
   title: { padding: "20px 0 20px 0", color: "#110F16" },
@@ -57,8 +58,30 @@ function DepositMoney() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!formData.price || !formData.date) {
+      alert("Valor e Data são campos obrigatórios!");
+      return;
+    }
+
+    try {
+      if (!token) return;
+      await api.createDeposit(formData, token);
+      alert(`Depósito de ${formData.price} salvo com sucesso`);
+      navigate("/home");
+    } catch (error) {
+      if (error.response) {
+        alert("Erro: " + error.response.data.error);
+        return;
+      }
+      alert("Erro, tente novamente em alguns segundos!");
+    }
+  }
+
   return (
-    <Form onSubmit={() => {}} style={styles.form}>
+    <Form onSubmit={handleSubmit} style={styles.form}>
       <Typography sx={styles.title} variant="h4" component="h1">
         Cadastrar
       </Typography>
@@ -91,7 +114,7 @@ function DepositMoney() {
           name="price"
           sx={styles.input}
           label="Valor"
-          type="price"
+          type="number"
           variant="outlined"
           onChange={handleInputChange}
           value={formData.price}
