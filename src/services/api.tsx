@@ -38,6 +38,17 @@ interface Deposit {
 
 type CreateDeposit = Omit<Deposit, "id">;
 
+interface Payment {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  date: Date;
+  category: string;
+}
+
+type CreatePayment = Omit<Payment, "id">;
+
 async function signUp(signUpData: SignUpData) {
   await baseAPI.post("/sign-up", signUpData);
 }
@@ -56,11 +67,17 @@ async function createDeposit(depositData: CreateDeposit, token: string) {
   return baseAPI.post("/create-deposit", depositData, accessToken);
 }
 
+async function createPayment(paymentData: CreatePayment, token: string) {
+  const accessToken = getConfig(token)
+  return baseAPI.post("/create-payment", paymentData, accessToken);
+}
+
 const api = {
   signUp,
   signIn,
   getCategories,
   createDeposit,
+  createPayment,
 };
 
 export default api;

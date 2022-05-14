@@ -79,8 +79,30 @@ function SpendMoney() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!formData.price || !formData.date || !formData.category) {
+      alert("Valor, Data e Categoria são campos obrigatórios!");
+      return;
+    }
+
+    try {
+      if (!token) return;
+      await api.createPayment(formData, token);
+      alert(`Pagamento de ${formData.price} salvo com sucesso`);
+      navigate("/home");
+    } catch (error) {
+      if (error.response) {
+        alert("Erro: " + error.response.data.error);
+        return;
+      }
+      alert("Erro, tente novamente em alguns segundos!");
+    }
+  }
+
   return (
-    <Form onSubmit={() => {}} style={styles.form}>
+    <Form onSubmit={handleSubmit} style={styles.form}>
       <Typography sx={styles.title} variant="h4" component="h1">
         Cadastrar
       </Typography>
