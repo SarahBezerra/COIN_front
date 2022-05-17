@@ -26,9 +26,13 @@ interface SignInData {
 interface Category {
   id: number;
   name: string;
+  userId: number;
+  color: string;
+  icon: string;
 }
 
 interface Deposit {
+  userId: number;
   id: number;
   title: string;
   description: string;
@@ -36,10 +40,11 @@ interface Deposit {
   date: Date;
 }
 
-type CreateDeposit = Omit<Deposit, "id">;
+type CreateDeposit = Omit<Deposit, "id" | "userId">;
 
 interface Payment {
   id: number;
+  userId: number;
   title: string;
   description: string;
   price: number;
@@ -47,7 +52,7 @@ interface Payment {
   category: string;
 }
 
-type CreatePayment = Omit<Payment, "id">;
+type CreatePayment = Omit<Payment, "id" | "userId">;
 
 async function signUp(signUpData: SignUpData) {
   await baseAPI.post("/sign-up", signUpData);
@@ -72,12 +77,18 @@ async function createPayment(paymentData: CreatePayment, token: string) {
   return baseAPI.post("/create-payment", paymentData, accessToken);
 }
 
+async function getPayments(token: string) {
+  const accessToken = getConfig(token)
+  return baseAPI.get<Payment[]>("/payments", accessToken);
+}
+
 const api = {
   signUp,
   signIn,
   getCategories,
   createDeposit,
   createPayment,
+  getPayments,
 };
 
 export default api;
