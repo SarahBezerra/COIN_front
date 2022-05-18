@@ -1,18 +1,28 @@
 import { Box } from "@mui/system";
 
 const style = {
-  display: "flex",
-  position: "fixed",
-  top: "15px",
-  right: "15px",
-  fontSize: "100px",
-  color: "#000",
+  box: {
+    height: "35px",
+    backgroundColor: "#fff",
+    padding: "0 10px",
+    position: "fixed",
+    top: "0",
+    right: "0",
+    left: "0",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  icon: {
+    fontSize: "100px",
+    color: "#000",
+  },
 };
 
 export default function MenuIcon() {
   return (
-    <Box sx={style} component="div">
-      <ion-icon name="menu-outline" size="large" sx={style}></ion-icon>
+    <Box sx={style.box} component="div">
+      <ion-icon name="menu-outline" size="large" sx={style.icon}></ion-icon>
     </Box>
   );
 }

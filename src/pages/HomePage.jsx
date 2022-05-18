@@ -5,9 +5,10 @@ import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 import MenuIcon from "../components/MenuIcon";
 import DescriptionOfPayments from "../components/DescriptionOfPayments";
+import Navbar from "../components/Navbar";
 
 const styles = {
-  box: { backgroundColor: "#fff", height: "100%" },
+  box: { backgroundColor: "#fff", height: "100%", paddingBottom: "55px" },
   title: { padding: "60px 0 10px 0", color: "#110F16", textAlign: "center" },
   payments: { padding: "20px", color: "#110F16" },
   payment: {
@@ -96,6 +97,7 @@ function Home() {
           </Box>
         )}
       </Box>
+      <Navbar />
       <DescriptionOfPayments
         display={descriptionOfPaymentsDisplay}
         data={descriptionOfPayments}
