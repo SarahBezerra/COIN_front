@@ -8,7 +8,7 @@ export default function DescriptionOfPayments({ display, data }) {
       borderRadius: "0 0 20px 20px",
       position: "fixed",
       backgroundColor: "#f8f8f8",
-      boxShadow: "3px 4px 8px 0px #b8b8b8a0",
+      boxShadow: "5px 5px 20px 70px rgba(0,0,0,0.6)",
       overflowY: "scroll",
     },
     top: {
@@ -21,6 +21,7 @@ export default function DescriptionOfPayments({ display, data }) {
       right: "0px",
       left: "0px",
       top: "15px",
+      zIndex: "2",
     },
     return: {
       color: "#fff",

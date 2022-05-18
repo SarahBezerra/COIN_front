@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Navbar() {
+  const navigate = useNavigate();
+
   const style = {
     box: {
       position: "fixed",
@@ -31,7 +35,13 @@ export default function Navbar() {
       <ion-icon name="chatbubbles-outline" style={style.icon}></ion-icon>
       <button style={style.button}>+</button>
       <ion-icon name="pie-chart-outline" style={style.icon}></ion-icon>
-      <ion-icon name="clipboard-outline" style={style.icon}></ion-icon>
+      <ion-icon
+        name="clipboard-outline"
+        style={style.icon}
+        onClick={() => {
+          navigate("/planning");
+        }}
+      ></ion-icon>
     </div>
   );
 }
