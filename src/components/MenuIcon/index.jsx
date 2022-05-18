@@ -6,7 +6,7 @@ const style = {
   top: "15px",
   right: "15px",
   fontSize: "100px",
-  color: "#fff",
+  color: "#000",
 };
 
 export default function MenuIcon() {

@@ -4,11 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 import MenuIcon from "../components/MenuIcon";
+import DescriptionOfPayments from "../components/DescriptionOfPayments";
 
 const styles = {
-  box: { backgroundColor: "#110F16", height: "100vh" },
-  title: { padding: "60px 0 40px 0", color: "#fff", textAlign: "center" },
-  payments: { padding: "30px 20px", color: "#fff" },
+  box: { backgroundColor: "#fff", height: "100%" },
+  title: { padding: "60px 0 10px 0", color: "#110F16", textAlign: "center" },
+  payments: { padding: "20px", color: "#110F16" },
   payment: {
     display: "flex",
     justfyContents: "space-between",
@@ -19,7 +20,7 @@ const styles = {
     padding: "10px 0",
   },
   category: { fontSize: "16px", marginTop: "1px" },
-  transactions: { fontSize: "14px", fontWeight: "300", color: "#d8d8d8" },
+  transactions: { fontSize: "14px", fontWeight: "300", color: "#2b2b2b" },
   categoryItem: {
     fontSize: "22px",
     color: "#110F16",
@@ -33,13 +34,16 @@ const styles = {
 function Home() {
   const { token } = useAuth();
   const [categories, setCategories] = useState([]);
+  const [descriptionOfPaymentsDisplay, setDescriptionOfPaymentsDisplay] =
+    useState("none");
+  const [descriptionOfPayments, setDescriptionOfPayments] = useState([]);
 
   useEffect(() => {
     async function loadPage() {
       if (!token) return;
 
-      const { data } = await api.getPayments(token);
-      setCategories(data);
+      const { data: paymentsData } = await api.getPayments(token);
+      setCategories(paymentsData);
     }
     loadPage();
   }, [token]);
@@ -49,7 +53,7 @@ function Home() {
       <Box sx={styles.box}>
         <MenuIcon></MenuIcon>
         <Typography sx={styles.title} variant="h5" component="h1">
-          Balanço Mensal
+          Gasto Mensal
         </Typography>
 
         {categories.length === 0 ? (
@@ -74,16 +78,28 @@ function Home() {
                       {category.Payment.length} transações
                     </div>
                   </Box>
-                  <ion-icon
-                    name="ellipsis-horizontal"
-                    style={styles.ellipsisIcon}
-                  ></ion-icon>
+                  {category.Payment.length === 0 ? (
+                    <></>
+                  ) : (
+                    <ion-icon
+                      onClick={() => {
+                        setDescriptionOfPaymentsDisplay("block");
+                        setDescriptionOfPayments(category.Payment);
+                      }}
+                      name="ellipsis-horizontal"
+                      style={styles.ellipsisIcon}
+                    ></ion-icon>
+                  )}
                 </Box>
               );
             })}
           </Box>
         )}
       </Box>
+      <DescriptionOfPayments
+        display={descriptionOfPaymentsDisplay}
+        data={descriptionOfPayments}
+      />
     </>
   );
 }
