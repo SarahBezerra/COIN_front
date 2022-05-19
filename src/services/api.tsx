@@ -52,6 +52,15 @@ interface Payment {
   category: string;
 }
 
+interface MonthlyPlanning {
+  id: number;
+  userId: number;
+  month: number;
+  year: number;
+  roof: number;
+  outlay: number;
+}
+
 type CreatePayment = Omit<Payment, "id" | "userId">;
 
 async function signUp(signUpData: SignUpData) {
@@ -82,6 +91,11 @@ async function getPayments(token: string) {
   return baseAPI.get<Payment[]>("/payments", accessToken);
 }
 
+async function getMonthlyPlanning(token: string, month: number, year: number) {
+  const accessToken = getConfig(token)
+  return baseAPI.get<MonthlyPlanning>(`/getMonthlyPlanning/${year}/${month}`, accessToken);
+}
+
 const api = {
   signUp,
   signIn,
@@ -89,6 +103,7 @@ const api = {
   createDeposit,
   createPayment,
   getPayments,
+  getMonthlyPlanning,
 };
 
 export default api;

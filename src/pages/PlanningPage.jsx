@@ -1,4 +1,6 @@
 import { Box, Typography, Button } from "@mui/material/";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const styles = {
   box: {
@@ -22,17 +24,32 @@ const styles = {
 };
 
 function Planning() {
+  const navigate = useNavigate();
+
   return (
     <Box style={styles.box}>
       <Typography sx={styles.title} variant="h5" component="h1">
         Planejamento
       </Typography>
-      <Button variant="contained" style={styles.buttom}>
+      <Button
+        variant="contained"
+        style={styles.buttom}
+        onClick={() => {
+          navigate("/planning/category");
+        }}
+      >
         Planejamento por Categoria
       </Button>
-      <Button variant="contained" style={styles.buttom}>
+      <Button
+        variant="contained"
+        style={styles.buttom}
+        onClick={() => {
+          navigate("/planning/month");
+        }}
+      >
         Planejamento Mensal
       </Button>
+      <Navbar />
     </Box>
   );
 }

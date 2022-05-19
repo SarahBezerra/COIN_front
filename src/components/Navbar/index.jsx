@@ -33,8 +33,21 @@ export default function Navbar() {
     <div style={style.box}>
       <ion-icon name="calculator-outline" style={style.icon}></ion-icon>
       <ion-icon name="chatbubbles-outline" style={style.icon}></ion-icon>
-      <button style={style.button}>+</button>
-      <ion-icon name="pie-chart-outline" style={style.icon}></ion-icon>
+      <button
+        style={style.button}
+        onClick={() => {
+          navigate("/register/spend-money");
+        }}
+      >
+        +
+      </button>
+      <ion-icon
+        name="pie-chart-outline"
+        style={style.icon}
+        onClick={() => {
+          navigate("/home");
+        }}
+      ></ion-icon>
       <ion-icon
         name="clipboard-outline"
         style={style.icon}

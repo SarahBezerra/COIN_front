@@ -9,6 +9,8 @@ import SpendMoney from "./pages/SpendMoneyPage";
 import DepositMoney from "./pages/DepositMoneyPage";
 import Home from "./pages/HomePage";
 import Planning from "./pages/PlanningPage";
+import PlanningByCategory from "./pages/PlanningByCategoryPage";
+import MonthlyPlanning from "./pages/MonthlyPlanningPage";
 
 function App() {
   const theme = createTheme({
@@ -34,6 +36,8 @@ function App() {
               <Route path="/register/deposit-money" element={<DepositMoney />} />
               <Route path="/home" element={<Home />} />
               <Route path="/planning" element={<Planning />} />
+              <Route path="/planning/category" element={<PlanningByCategory />} />
+              <Route path="/planning/month" element={<MonthlyPlanning />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>
