@@ -9,7 +9,7 @@ import Navbar from "../components/Navbar";
 
 const styles = {
   box: { backgroundColor: "#fff", height: "100%", paddingBottom: "55px" },
-  title: { padding: "60px 0 10px 0", color: "#110F16", textAlign: "center" },
+  title: { padding: "50px 0 10px 0", color: "#110F16", textAlign: "center" },
   payments: { padding: "20px", color: "#110F16" },
   payment: {
     display: "flex",
