@@ -101,6 +101,11 @@ async function updateMonthlyPlanning(token: string, year: number, month: number,
   return baseAPI.put(`/monthlyPlanning/${year}/${month}`, {limit}, accessToken);
 }
 
+async function deleteMonthlyPlanning(token: string, year: number, month: number) {
+  const accessToken = getConfig(token)
+  return baseAPI.delete(`/monthlyPlanning/${year}/${month}`, accessToken);
+}
+
 const api = {
   signUp,
   signIn,
@@ -110,6 +115,7 @@ const api = {
   getPayments,
   getMonthlyPlanning,
   updateMonthlyPlanning,
+  deleteMonthlyPlanning,
 };
 
 export default api;

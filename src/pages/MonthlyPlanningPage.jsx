@@ -62,8 +62,11 @@ const styles = {
     justifyContent: "space-between",
     marginBottom: "10px",
   },
-  pencilIcon: {
+  actionIcons: {
     textAlign: "right",
+  },
+  pencilIcon: {
+    marginRight: "6px",
   },
 };
 
@@ -126,11 +129,22 @@ function MonthlyPlanning() {
       </div>
       <Box>
         <Box style={styles.planning}>
-          <div style={styles.pencilIcon}>
+          <div style={styles.actionIcons}>
             <ion-icon
+              style={styles.pencilIcon}
               name="pencil"
               onClick={() => {
                 navigate(`/planning/month/edit/${year}/${month}`);
+              }}
+            ></ion-icon>
+            <ion-icon
+              name="trash-outline"
+              onClick={() => {
+                const result = window.confirm(
+                  `Realmente deseja excluir o planejamento de ${month}/${year}`
+                );
+                result === true &&
+                  api.deleteMonthlyPlanning(token, year, month);
               }}
             ></ion-icon>
           </div>
@@ -167,3 +181,4 @@ function MonthlyPlanning() {
 }
 
 export default MonthlyPlanning;
+<ion-icon name="trash-outline"></ion-icon>;
