@@ -25,6 +25,9 @@ const styles = {
 
 function Planning() {
   const navigate = useNavigate();
+  const date = new Date();
+  const currentMonth = date.getMonth() + 1;
+  const currentYear = date.getFullYear();
 
   return (
     <Box style={styles.box}>
@@ -44,7 +47,7 @@ function Planning() {
         variant="contained"
         style={styles.buttom}
         onClick={() => {
-          navigate("/planning/month");
+          navigate(`/planning/month/${currentYear}/${currentMonth}`);
         }}
       >
         Planejamento Mensal

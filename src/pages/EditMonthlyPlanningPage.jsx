@@ -67,7 +67,7 @@ function EditMonthlyPlanning() {
 
     try {
       await api.updateMonthlyPlanning(token, year, month, inputDate);
-      navigate(`/planning/month`);
+      navigate(`/planning/month/${year}/${month}`);
     } catch (error) {
       if (error.response) {
         alert(`Erro: ${error.response.data}`);
@@ -83,7 +83,7 @@ function EditMonthlyPlanning() {
         style={styles.return}
         name="return-up-back-outline"
         onClick={() => {
-          navigate("/planning/month");
+          navigate(`/planning/month/${year}/${month}`);
         }}
       ></ion-icon>
       <Box style={styles.planning}>

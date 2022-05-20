@@ -1,6 +1,6 @@
 import { Box, Typography, Button } from "@mui/material/";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 import months from "../utils/months";
@@ -76,13 +76,11 @@ const styles = {
 function MonthlyPlanning() {
   const { token } = useAuth();
   const navigate = useNavigate();
+  const params = useParams();
+  const { year, month } = params;
 
-  const date = new Date();
-  const currentMonth = date.getMonth() + 1;
-  const currentYear = date.getFullYear();
-
-  const [month, setMonth] = useState(currentMonth);
-  const [year, setYear] = useState(currentYear);
+  const [monthState, setMonthState] = useState(month);
+  const [yearState, setYearState] = useState(year);
   const [planning, setPlanning] = useState([]);
   const [infos, setInfos] = useState({ barColor: "#fff", message: "ok" });
 
@@ -92,8 +90,8 @@ function MonthlyPlanning() {
 
       const { data: planningData } = await api.getMonthlyPlanning(
         token,
-        month,
-        year
+        monthState,
+        yearState
       );
 
       setPlanning(planningData);
@@ -107,7 +105,7 @@ function MonthlyPlanning() {
       } else setInfos({ ...infos, barColor: "#e44c11", message: "danger" });
     }
     loadPage();
-  }, [infos, token, month, year]);
+  }, [infos, token, monthState, yearState]);
 
   return (
     <Box style={styles.box}>
@@ -124,11 +122,35 @@ function MonthlyPlanning() {
       </Typography>
 
       <div style={styles.months}>
-        <ion-icon name="chevron-back-outline"></ion-icon>
+        <ion-icon
+          name="chevron-back-outline"
+          onClick={() => {
+            let lastMonth = Number(month) - 1;
+            let lastYear = year;
+            if (lastMonth < 1) {
+              lastMonth = 12;
+              lastYear--;
+            }
+            navigate(`/planning/month/${lastYear}/${lastMonth}`);
+            document.location.reload(true);
+          }}
+        ></ion-icon>
         <Typography sx={styles.month} variant="h6" component="h2">
-          {months[month - 1]}
+          {months[monthState - 1]}
         </Typography>
-        <ion-icon name="chevron-forward-outline"></ion-icon>
+        <ion-icon
+          name="chevron-forward-outline"
+          onClick={() => {
+            let nextMonth = Number(month) + 1;
+            let nextYear = year;
+            if (nextMonth > months.length) {
+              nextMonth = 1;
+              nextYear++;
+            }
+            navigate(`/planning/month/${nextYear}/${nextMonth}`);
+            document.location.reload(true);
+          }}
+        ></ion-icon>
       </div>
       <Box>
         {planning.length === 0 ? (
@@ -138,7 +160,7 @@ function MonthlyPlanning() {
               variant="contained"
               style={styles.button}
               onClick={() => {
-                navigate(`/planning/month/create/${year}/${month}`);
+                navigate(`/planning/month/create/${yearState}/${monthState}`);
               }}
             >
               Planejar
@@ -151,17 +173,17 @@ function MonthlyPlanning() {
                 style={styles.pencilIcon}
                 name="pencil"
                 onClick={() => {
-                  navigate(`/planning/month/edit/${year}/${month}`);
+                  navigate(`/planning/month/edit/${yearState}/${monthState}`);
                 }}
               ></ion-icon>
               <ion-icon
                 name="trash-outline"
                 onClick={() => {
                   const result = window.confirm(
-                    `Realmente deseja excluir o planejamento de ${month}/${year}`
+                    `Realmente deseja excluir o planejamento de ${monthState}/${year}`
                   );
                   result === true &&
-                    api.deleteMonthlyPlanning(token, year, month);
+                    api.deleteMonthlyPlanning(token, yearState, monthState);
                 }}
               ></ion-icon>
             </div>

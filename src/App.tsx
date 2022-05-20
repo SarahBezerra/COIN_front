@@ -39,7 +39,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/planning" element={<Planning />} />
               <Route path="/planning/category" element={<PlanningByCategory />} />
-              <Route path="/planning/month" element={<MonthlyPlanning />} />
+              <Route path="/planning/month/:year/:month" element={<MonthlyPlanning />} />
               <Route path="/planning/month/edit/:year/:month" element={<EditMonthlyPlanning />} />
               <Route path="/planning/month/create/:year/:month" element={<CreateMonthlyPlanning />} />
             </Routes>
