@@ -42,8 +42,8 @@ const styles = {
     fontSize: "20px",
   },
   planning: {
-    padding: "20px 10px",
-    backgroundColor: "#b9b1b1",
+    padding: "10px 10px 20px",
+    backgroundColor: "#e0d7eb",
     borderRadius: "4px",
   },
   bar: {
@@ -51,7 +51,7 @@ const styles = {
     height: "5px",
     backgroundColor: "#fff",
     borderRadius: "10px",
-    marginBottom: "3px",
+    margin: "5px 0 3px",
   },
   innerBar: {
     height: "5px",
@@ -61,6 +61,9 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     marginBottom: "10px",
+  },
+  pencilIcon: {
+    textAlign: "right",
   },
 };
 
@@ -123,6 +126,14 @@ function MonthlyPlanning() {
       </div>
       <Box>
         <Box style={styles.planning}>
+          <div style={styles.pencilIcon}>
+            <ion-icon
+              name="pencil"
+              onClick={() => {
+                navigate(`/planning/month/edit/${year}/${month}`);
+              }}
+            ></ion-icon>
+          </div>
           <Box style={styles.bar}>
             <Box
               style={{

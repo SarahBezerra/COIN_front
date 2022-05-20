@@ -11,6 +11,7 @@ import Home from "./pages/HomePage";
 import Planning from "./pages/PlanningPage";
 import PlanningByCategory from "./pages/PlanningByCategoryPage";
 import MonthlyPlanning from "./pages/MonthlyPlanningPage";
+import EditMonthlyPlanning from "./pages/EditMonthlyPlanningPage";
 
 function App() {
   const theme = createTheme({
@@ -38,6 +39,7 @@ function App() {
               <Route path="/planning" element={<Planning />} />
               <Route path="/planning/category" element={<PlanningByCategory />} />
               <Route path="/planning/month" element={<MonthlyPlanning />} />
+              <Route path="/planning/month/edit/:year/:month" element={<EditMonthlyPlanning />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

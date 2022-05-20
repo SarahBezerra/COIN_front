@@ -93,7 +93,12 @@ async function getPayments(token: string) {
 
 async function getMonthlyPlanning(token: string, month: number, year: number) {
   const accessToken = getConfig(token)
-  return baseAPI.get<MonthlyPlanning>(`/getMonthlyPlanning/${year}/${month}`, accessToken);
+  return baseAPI.get<MonthlyPlanning>(`/monthlyPlanning/${year}/${month}`, accessToken);
+}
+
+async function updateMonthlyPlanning(token: string, year: number, month: number, limit: number) {
+  const accessToken = getConfig(token)
+  return baseAPI.put(`/monthlyPlanning/${year}/${month}`, {limit}, accessToken);
 }
 
 const api = {
@@ -104,6 +109,7 @@ const api = {
   createPayment,
   getPayments,
   getMonthlyPlanning,
+  updateMonthlyPlanning,
 };
 
 export default api;
