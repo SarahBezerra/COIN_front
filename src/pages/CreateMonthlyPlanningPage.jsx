@@ -46,7 +46,7 @@ const styles = {
   },
 };
 
-function EditMonthlyPlanning() {
+function CreateMonthlyPlanning() {
   const { token } = useAuth();
   const navigate = useNavigate();
   const params = useParams();
@@ -66,7 +66,7 @@ function EditMonthlyPlanning() {
     }
 
     try {
-      await api.updateMonthlyPlanning(token, year, month, inputDate);
+      await api.createMonthlyPlanning(token, year, month, inputDate);
       navigate(`/planning/month`);
     } catch (error) {
       if (error.response) {
@@ -88,7 +88,7 @@ function EditMonthlyPlanning() {
       ></ion-icon>
       <Box style={styles.planning}>
         <Typography sx={styles.title} variant="h6" component="h1">
-          Editar limite
+          Criar limite para:
         </Typography>
         <Typography sx={styles.month} variant="h6" component="h2">
           {month}/{year}
@@ -97,14 +97,14 @@ function EditMonthlyPlanning() {
           <TextField
             name="limit"
             sx={styles.input}
-            label="Novo limite"
+            label="Limite"
             type="number"
             variant="outlined"
             onChange={handleInputChange}
             value={inputDate}
           />
           <Button variant="contained" type="submit" sx={styles.button}>
-            Editar
+            Criar
           </Button>
         </form>
       </Box>
@@ -112,4 +112,4 @@ function EditMonthlyPlanning() {
   );
 }
 
-export default EditMonthlyPlanning;
+export default CreateMonthlyPlanning;

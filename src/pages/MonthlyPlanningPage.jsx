@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material/";
+import { Box, Typography, Button } from "@mui/material/";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -68,6 +68,9 @@ const styles = {
   pencilIcon: {
     marginRight: "6px",
   },
+  button: {
+    width: "100%",
+  },
 };
 
 function MonthlyPlanning() {
@@ -128,53 +131,68 @@ function MonthlyPlanning() {
         <ion-icon name="chevron-forward-outline"></ion-icon>
       </div>
       <Box>
-        <Box style={styles.planning}>
-          <div style={styles.actionIcons}>
-            <ion-icon
-              style={styles.pencilIcon}
-              name="pencil"
+        {planning.length === 0 ? (
+          <Box style={styles.planning}>
+            <p>Ops! {<br />}Parece que você ainda não planejou esse mês</p>
+            <Button
+              variant="contained"
+              style={styles.button}
               onClick={() => {
-                navigate(`/planning/month/edit/${year}/${month}`);
+                navigate(`/planning/month/create/${year}/${month}`);
               }}
-            ></ion-icon>
-            <ion-icon
-              name="trash-outline"
-              onClick={() => {
-                const result = window.confirm(
-                  `Realmente deseja excluir o planejamento de ${month}/${year}`
-                );
-                result === true &&
-                  api.deleteMonthlyPlanning(token, year, month);
-              }}
-            ></ion-icon>
-          </div>
-          <Box style={styles.bar}>
-            <Box
-              style={{
-                ...styles.innerBar,
-                backgroundColor: infos.barColor,
-                width:
-                  infos.message === "danger"
-                    ? "100%"
-                    : `${(planning.outlay * 100) / planning.roof}%`,
-              }}
-            ></Box>
+            >
+              Planejar
+            </Button>
           </Box>
-          <Box style={styles.values}>
-            <div>R$ {planning.outlay / 100}</div>
-            <div>R$ {planning.roof / 100}</div>
+        ) : (
+          <Box style={styles.planning}>
+            <div style={styles.actionIcons}>
+              <ion-icon
+                style={styles.pencilIcon}
+                name="pencil"
+                onClick={() => {
+                  navigate(`/planning/month/edit/${year}/${month}`);
+                }}
+              ></ion-icon>
+              <ion-icon
+                name="trash-outline"
+                onClick={() => {
+                  const result = window.confirm(
+                    `Realmente deseja excluir o planejamento de ${month}/${year}`
+                  );
+                  result === true &&
+                    api.deleteMonthlyPlanning(token, year, month);
+                }}
+              ></ion-icon>
+            </div>
+            <Box style={styles.bar}>
+              <Box
+                style={{
+                  ...styles.innerBar,
+                  backgroundColor: infos.barColor,
+                  width:
+                    infos.message === "danger"
+                      ? "100%"
+                      : `${(planning.outlay * 100) / planning.roof}%`,
+                }}
+              ></Box>
+            </Box>
+            <Box style={styles.values}>
+              <div>R$ {planning.outlay / 100}</div>
+              <div>R$ {planning.roof / 100}</div>
+            </Box>
+            <div>
+              {infos.message === "ok" &&
+                `Restam R$${(planning.roof - planning.outlay) / 100} do total`}
+              {infos.message === "risk" &&
+                `Restam R$${(planning.roof - planning.outlay) / 100} do total`}
+              {infos.message === "limit" &&
+                `Limite de R$${planning.roof / 100} atingido`}
+              {infos.message === "danger" &&
+                `Gasto de R$${(planning.outlay - planning.roof) / 100} a mais`}
+            </div>
           </Box>
-          <div>
-            {infos.message === "ok" &&
-              `Restam R$${(planning.roof - planning.outlay) / 100} do total`}
-            {infos.message === "risk" &&
-              `Restam R$${(planning.roof - planning.outlay) / 100} do total`}
-            {infos.message === "limit" &&
-              `Limite de R$${planning.roof / 100} atingido`}
-            {infos.message === "danger" &&
-              `Gasto de R$${(planning.outlay - planning.roof) / 100} a mais`}
-          </div>
-        </Box>
+        )}
       </Box>
     </Box>
   );
