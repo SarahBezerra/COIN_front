@@ -1,6 +1,8 @@
 import { Edit, ExitToApp, Person } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const style = {
   top: {
@@ -54,6 +56,8 @@ const style = {
 };
 
 export default function MenuIcon() {
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
   const [hidden, setHidden] = useState("none");
 
   return hidden === "none" ? (
@@ -84,13 +88,26 @@ export default function MenuIcon() {
           <Person style={style.icon} />
           <p>Editar Perfil</p>
         </div>
-        <div style={style.option}>
+        <div
+          style={style.option}
+          onClick={() => {
+            navigate("/categories/create");
+          }}
+        >
           <Edit style={style.icon} />
           <p>Editar Categorias</p>
         </div>
         <div style={style.option}>
           <ExitToApp style={style.icon} />
-          <p style={style.exit}>Sair</p>
+          <p
+            style={style.exit}
+            onClick={() => {
+              signIn("");
+              navigate("/");
+            }}
+          >
+            Sair
+          </p>
         </div>
       </Box>
     </Box>

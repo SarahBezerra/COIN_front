@@ -58,8 +58,12 @@ function Home() {
         </Typography>
 
         {categories.length === 0 ? (
-          <Box sx={styles.payments}>
+          <Box sx={{ ...styles.payments, textAlign: "center" }}>
             <div>Sem categorias criadas</div>
+            <ion-icon
+              name="sad-outline"
+              style={{ fontSize: "25px", marginTop: "10px" }}
+            ></ion-icon>
           </Box>
         ) : (
           <Box sx={styles.payments}>

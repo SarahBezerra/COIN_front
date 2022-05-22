@@ -182,8 +182,10 @@ function MonthlyPlanning() {
                   const result = window.confirm(
                     `Realmente deseja excluir o planejamento de ${monthState}/${year}`
                   );
-                  result === true &&
+                  if (result) {
                     api.deleteMonthlyPlanning(token, yearState, monthState);
+                    document.location.reload(true);
+                  }
                 }}
               ></ion-icon>
             </div>
@@ -221,4 +223,3 @@ function MonthlyPlanning() {
 }
 
 export default MonthlyPlanning;
-<ion-icon name="trash-outline"></ion-icon>;

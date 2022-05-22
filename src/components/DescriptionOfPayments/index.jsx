@@ -10,6 +10,7 @@ export default function DescriptionOfPayments({ display, data }) {
       backgroundColor: "#f8f8f8",
       boxShadow: "5px 5px 20px 70px rgba(0,0,0,0.6)",
       overflowY: "scroll",
+      zIndex: "2",
     },
     top: {
       backgroundColor: "#1D204B",
@@ -21,7 +22,7 @@ export default function DescriptionOfPayments({ display, data }) {
       right: "0px",
       left: "0px",
       top: "15px",
-      zIndex: "2",
+      zIndex: "3",
     },
     return: {
       color: "#fff",
