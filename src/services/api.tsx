@@ -31,6 +31,8 @@ interface Category {
   icon: string;
 }
 
+type CreateCategory = Omit<Category, "id" | "userId">
+
 interface Deposit {
   userId: number;
   id: number;
@@ -116,6 +118,11 @@ async function deleteCategory(token: string, categoryId: number) {
   return baseAPI.delete(`/categories/${categoryId}`, accessToken);
 }
 
+async function createCategory(token: string, data: CreateCategory) {
+  const accessToken = getConfig(token)
+  return baseAPI.post(`/categories/create`, data, accessToken);
+}
+
 const api = {
   signUp,
   signIn,
@@ -128,6 +135,7 @@ const api = {
   deleteMonthlyPlanning,
   createMonthlyPlanning,
   deleteCategory,
+  createCategory,
 };
 
 export default api;

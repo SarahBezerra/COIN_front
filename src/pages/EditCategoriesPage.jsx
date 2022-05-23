@@ -5,6 +5,7 @@ import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 import icons from "../utils/icons";
 import colors from "../utils/colors";
+import { string } from "joi";
 
 const styles = {
   box: {
@@ -74,15 +75,16 @@ function EditCategories() {
   const { token } = useAuth();
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const [inputDate, setInputDate] = useState({
+  const [inputData, setInputData] = useState({
     name: "",
     icon: "airplane-outline",
     color: "ffcdd2",
   });
 
   function handleInputChange(e) {
-    setInputDate({ ...inputDate, [e.target.name]: e.target.value });
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
   }
+
   useEffect(() => {
     async function loadPage() {
       if (!token) return;
@@ -92,6 +94,27 @@ function EditCategories() {
     }
     loadPage();
   }, [token]);
+
+  async function handleSubmit() {
+    if (!token) return;
+
+    if (!inputData.name || !inputData.icon || !inputData.color) {
+      alert(
+        "Para criar uma categoria é preciso escolher um Nome, um Ícone e uma Cor"
+      );
+    }
+
+    try {
+      await api.createCategory(token, inputData);
+      navigate("/home");
+    } catch (error) {
+      if (error) {
+        alert(`Erro: ${error.response.data.error}`);
+        return;
+      }
+      alert("Erro, tente novamente em alguns segundos!");
+    }
+  }
 
   return (
     <>
@@ -203,7 +226,7 @@ function EditCategories() {
               type="text"
               variant="outlined"
               onChange={handleInputChange}
-              value={inputDate.name}
+              value={inputData.name}
             />
 
             <Typography
@@ -232,11 +255,12 @@ function EditCategories() {
                       height: "30px",
                       width: "30px",
                       borderRadius: "4px",
+                      boxShadow: "1px 1px 5px 3px #706f6f6e",
                       backgroundColor:
-                        inputDate.icon === icon.name ? "#7b70e2" : "#e0d7eb",
+                        inputData.icon === icon.name ? "#7b70e2" : "#e0d7eb",
                     }}
                     onClick={() => {
-                      setInputDate({ ...inputDate, icon: icon.name });
+                      setInputData({ ...inputData, icon: icon.name });
                     }}
                   >
                     <ion-icon name={icon.name}></ion-icon>
@@ -273,11 +297,11 @@ function EditCategories() {
                       backgroundColor: `#${color}`,
                       boxShadow: "1px 1px 5px 3px #706f6f6e",
                       border: `solid ${
-                        inputDate.color === color ? "3px #000" : "0px #000"
+                        inputData.color === color ? "3px #000" : "0px #000"
                       }`,
                     }}
                     onClick={() => {
-                      setInputDate({ ...inputDate, color });
+                      setInputData({ ...inputData, color });
                     }}
                   />
                 );
@@ -296,19 +320,23 @@ function EditCategories() {
               }}
             >
               <ion-icon
-                name={inputDate.icon}
+                name={inputData.icon}
                 style={{
                   fontSize: "20px",
                   color: "#110f16",
                   padding: "10px",
                   borderRadius: "50px",
-                  backgroundColor: `#${inputDate.color}`,
+                  backgroundColor: `#${inputData.color}`,
                 }}
               ></ion-icon>
-              <p style={{ marginLeft: "16px" }}>{inputDate.name}</p>
+              <p style={{ marginLeft: "16px" }}>{inputData.name}</p>
             </Box>
 
-            <Button variant="contained" sx={styles.button}>
+            <Button
+              variant="contained"
+              sx={styles.button}
+              onClick={handleSubmit}
+            >
               Criar
             </Button>
           </Box>
