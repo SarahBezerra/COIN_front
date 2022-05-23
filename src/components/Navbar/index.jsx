@@ -31,7 +31,13 @@ export default function Navbar() {
   };
   return (
     <div style={style.box}>
-      <ion-icon name="calculator-outline" style={style.icon}></ion-icon>
+      <ion-icon
+        name="calculator-outline"
+        style={style.icon}
+        onClick={() => {
+          navigate("/calculator");
+        }}
+      ></ion-icon>
       <ion-icon name="chatbubbles-outline" style={style.icon}></ion-icon>
       <button
         style={style.button}

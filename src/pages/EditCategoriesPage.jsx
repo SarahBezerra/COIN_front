@@ -109,7 +109,7 @@ function EditCategories() {
       navigate("/home");
     } catch (error) {
       if (error) {
-        alert(`Erro: ${error.response.data.error}`);
+        alert(`Erro: ${error.response.data}`);
         return;
       }
       alert("Erro, tente novamente em alguns segundos!");
