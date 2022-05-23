@@ -86,7 +86,7 @@ function SignUp() {
 
   return (
     <>
-      <Form onSubmit={handleSubmit} style={styles.form}>
+      <Form onSubmit={handleSubmit}>
         <img src={logo} alt="logo Coin" style={styles.logo} />
         <Box>
           <Typography sx={styles.title} variant="h4" component="h1">

@@ -141,7 +141,28 @@ function EditCategories() {
                         style={styles.pencilIcon}
                         name="pencil"
                       ></ion-icon>
-                      <ion-icon name="trash-outline"></ion-icon>
+                      <ion-icon
+                        name="trash-outline"
+                        onClick={async () => {
+                          const result = window.confirm(
+                            `Realmente deseja excluir essa categoria?`
+                          );
+                          if (result) {
+                            try {
+                              await api.deleteCategory(token, category.id);
+                              document.location.reload(true);
+                            } catch (error) {
+                              if (error.response) {
+                                alert(`Erro: ${error.response.data}`);
+                                return;
+                              }
+                              alert(
+                                "Erro, tente novamente em alguns segundos!"
+                              );
+                            }
+                          }
+                        }}
+                      ></ion-icon>
                     </div>
                   </Box>
                 );

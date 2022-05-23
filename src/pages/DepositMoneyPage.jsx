@@ -2,11 +2,12 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "../components/Form";
+import Navbar from "../components/Navbar";
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 
 const styles = {
-  title: { padding: "20px 0 20px 0", color: "#110F16" },
+  title: { paddingBottom: "20px", color: "#110F16" },
   input: { width: "100%", marginBottom: "10px" },
   button: {
     width: "80%",
@@ -81,57 +82,63 @@ function DepositMoney() {
   }
 
   return (
-    <Form onSubmit={handleSubmit} style={styles.form}>
-      <Typography sx={styles.title} variant="h4" component="h1">
-        Cadastrar
-      </Typography>
-      <Box sx={styles.tabs}>
-        <Box sx={styles.selectTab}>ENTRADA</Box>
-        <Box sx={styles.tab} onClick={() => navigate("/register/spend-money")}>
-          SAÍDA
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Typography sx={styles.title} variant="h4" component="h1">
+          Cadastrar
+        </Typography>
+        <Box sx={styles.tabs}>
+          <Box sx={styles.selectTab}>ENTRADA</Box>
+          <Box
+            sx={styles.tab}
+            onClick={() => navigate("/register/spend-money")}
+          >
+            SAÍDA
+          </Box>
         </Box>
-      </Box>
-      <Box sx={styles.container}>
-        <TextField
-          name="title"
-          sx={styles.input}
-          label="Título"
-          type="title"
-          variant="outlined"
-          onChange={handleInputChange}
-          value={formData.title}
-        />
-        <TextField
-          name="description"
-          sx={styles.input}
-          label="Descrição"
-          type="description"
-          variant="outlined"
-          onChange={handleInputChange}
-          value={formData.description}
-        />
-        <TextField
-          name="price"
-          sx={styles.input}
-          label="Valor"
-          type="number"
-          variant="outlined"
-          onChange={handleInputChange}
-          value={formData.price}
-        />
-        <TextField
-          name="date"
-          sx={styles.input}
-          type="date"
-          variant="outlined"
-          onChange={handleInputChange}
-          value={formData.date}
-        />
-        <Button variant="contained" type="submit" sx={styles.button}>
-          CADASTRAR
-        </Button>
-      </Box>
-    </Form>
+        <Box sx={styles.container}>
+          <TextField
+            name="title"
+            sx={styles.input}
+            label="Título"
+            type="title"
+            variant="outlined"
+            onChange={handleInputChange}
+            value={formData.title}
+          />
+          <TextField
+            name="description"
+            sx={styles.input}
+            label="Descrição"
+            type="description"
+            variant="outlined"
+            onChange={handleInputChange}
+            value={formData.description}
+          />
+          <TextField
+            name="price"
+            sx={styles.input}
+            label="Valor"
+            type="number"
+            variant="outlined"
+            onChange={handleInputChange}
+            value={formData.price}
+          />
+          <TextField
+            name="date"
+            sx={styles.input}
+            type="date"
+            variant="outlined"
+            onChange={handleInputChange}
+            value={formData.date}
+          />
+          <Button variant="contained" type="submit" sx={styles.button}>
+            CADASTRAR
+          </Button>
+        </Box>
+      </Form>
+      <Navbar />
+    </>
   );
 }
 
